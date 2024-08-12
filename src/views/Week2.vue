@@ -181,10 +181,11 @@ onMounted(async () => {
 
 <template>
   <!-- 註冊 -->
+  <h2>Week2 Homework</h2>
   <template v-if="isRegister">
     <div class="auth-contain">
       <div class="inner">
-        <h2>REGISTER</h2>
+        <h3>REGISTER</h3>
         <div class="form-group">
           <label for="register-email">Email</label>
           <input id="register-email" v-model="emailSignUp" placeholder="請輸入電子信箱" />
@@ -217,7 +218,7 @@ onMounted(async () => {
   <template v-if="isLogin && !token">
     <div class="auth-contain">
       <div class="inner">
-        <h2>LOGIN</h2>
+        <h3>LOGIN</h3>
         <div class="form-group">
           <label for="email">Email</label>
           <input id="email" v-model="emailSignIn" placeholder="請輸入電子信箱" type="email" />
@@ -244,7 +245,7 @@ onMounted(async () => {
     <div class="todo-list">
       <div class="inner">
         <div class="header">
-          <h2>【 {{ nicknameSignIn }} 】的待辦事項</h2>
+          <h3>【 {{ nicknameSignIn }} 】的待辦事項</h3>
           <button type="button" class="logout-btn" @click="signOut">登出</button>
         </div>
         <div class="add-new">
@@ -266,6 +267,13 @@ onMounted(async () => {
 </template>
 
 <style lang="scss" scoped>
+h2 {
+  color: #666;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
 .auth-contain {
   width: min(90%, 400px);
   margin: 0 auto;
@@ -276,7 +284,7 @@ onMounted(async () => {
     background-color: rgba(202, 202, 202, 0.5);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  h2 {
+  h3 {
     font-size: 30px;
     margin-bottom: 30px;
   }
@@ -365,7 +373,7 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
-    h2 {
+    h3 {
       font-size: 30px;
     }
     .logout-btn {

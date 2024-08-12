@@ -116,7 +116,7 @@ const cancelHandler = (item) => {
     <table>
       <thead>
         <tr>
-          <th scope="col" v-for="(item, index) in thead" :key="item">
+          <th scope="col" v-for="item in thead" :key="item">
             {{ item }}
           </th>
           <th></th>
