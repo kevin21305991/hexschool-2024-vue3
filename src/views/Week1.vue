@@ -78,6 +78,7 @@ const editTemp = ref({
 
 const addHandler = () => {
   editTemp.value.stock++;
+  console.log(editTemp.value.stock);
 };
 const minusHandler = () => {
   if (editTemp.value.stock >= 1) {
@@ -100,8 +101,7 @@ const editHandler = (item) => {
       name: '',
       description: '',
       price: '',
-      stock: '',
-      isEdit: false
+      stock: ''
     };
   }
 };
@@ -111,49 +111,147 @@ const cancelHandler = (item) => {
 </script>
 
 <template>
-  <h1>Week1</h1>
-  <table>
-    <thead>
-      <tr>
-        <th scope="col" v-for="item in thead" :key="item">{{ item }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in tbody" :key="item.id">
-        <template v-if="!item.isEdit">
-          <td>{{ item.name }}</td>
-          <td>
+  <div class="container">
+    <h2>Week1 Homework</h2>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col" v-for="(item, index) in thead" :key="item">
+            {{ item }}
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in tbody" :key="item.id">
+          <td v-if="!item.isEdit">{{ item.name }}</td>
+          <td v-else><input type="text" v-model="editTemp.name" /></td>
+
+          <td v-if="!item.isEdit">
             <small>{{ item.description }}</small>
           </td>
-          <td>{{ item.price }}</td>
-          <td>
-            <button type="button" disabled>-</button>{{ item.stock
-            }}<button type="button" disabled>+</button>
-          </td>
-          <td>
-            <button type="button" @click="editHandler(item)">編輯</button>
-            <button type="button" disabled>取消</button>
-          </td>
-        </template>
-        <template v-else>
-          <td><input type="text" v-model="editTemp.name" /></td>
-          <td>
+          <td v-else>
             <small><input type="text" v-model="editTemp.description" /></small>
           </td>
-          <td><input type="text" v-model="editTemp.price" /></td>
+
+          <td v-if="!item.isEdit">{{ item.price }}</td>
+          <td v-else><input type="text" v-model="editTemp.price" /></td>
+
           <td>
-            <button type="button" @click="minusHandler(item)">-</button>{{ editTemp.stock
-            }}<button type="button" @click="addHandler(item)">+</button>
+            <button type="button" @click="minusHandler" :disabled="!item.isEdit">-</button>
+            <span class="stock">{{ item.isEdit ? editTemp.stock : item.stock }}</span>
+            <button type="button" @click="addHandler" :disabled="!item.isEdit">+</button>
           </td>
           <td>
-            <button type="button" @click="editHandler(item)">儲存</button>
-            <button type="button" @click="cancelHandler(item)">取消</button>
+            <div class="button-group">
+              <button type="button" @click="editHandler(item)">
+                {{ !item.isEdit ? '編輯' : '儲存' }}
+              </button>
+              <button type="button" @click="cancelHandler(item)" :disabled="!item.isEdit">
+                取消
+              </button>
+            </div>
           </td>
-        </template>
-      </tr>
-    </tbody>
-  </table>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  width: min(100%, 800px);
+  margin: 0 auto;
+}
+h2 {
+  color: #666;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+table {
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
+  thead {
+    color: #fff;
+    background-color: #7f7f9b;
+    border-bottom: 1px solid #000;
+  }
+  tbody {
+    tr {
+      &:nth-of-type(odd) {
+        background-color: #fff;
+      }
+      &:nth-of-type(even) {
+        background-color: #eee;
+      }
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 10px;
+          }
+          &:last-child {
+            border-bottom-right-radius: 10px;
+          }
+        }
+      }
+      td {
+        height: 62px;
+        vertical-align: middle;
+      }
+    }
+  }
+  th,
+  td {
+    padding: 15px;
+    &:not(:nth-child(-n + 2)) {
+      text-align: center;
+      input {
+        text-align: center;
+      }
+    }
+    &:nth-child(-n + 2) {
+      text-align: left;
+    }
+    &:nth-child(1) {
+      width: 160px;
+    }
+    &:nth-child(3) {
+      width: 80px;
+    }
+    &:nth-child(4) {
+      width: 120px;
+    }
+    &:nth-child(5) {
+      width: 140px;
+    }
+  }
+  th {
+    font-size: 18px;
+    font-weight: bold;
+    &:first-child {
+      border-top-left-radius: 10px;
+    }
+    &:last-child {
+      border-top-right-radius: 10px;
+    }
+  }
+  input {
+    width: 100%;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 2px solid #7f7f9b;
+  }
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .stock {
+    padding: 0 5px;
+  }
+}
+</style>

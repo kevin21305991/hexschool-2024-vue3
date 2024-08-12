@@ -1,5 +1,5 @@
 {
-  "name": "hexschool-vue",
+  "name": "hexschool-2024-vue3",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "axios": "^1.7.3",
     "sass": "^1.77.8",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
