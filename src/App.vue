@@ -7,8 +7,9 @@ import { RouterLink, RouterView } from 'vue-router';
     <nav>
       <RouterLink to="/">Week1</RouterLink>
       <RouterLink to="/week2">Week2</RouterLink>
+      <RouterLink to="/week3">Week3</RouterLink>
     </nav>
-    <h1>六角學院 2024 vue 前端新手營</h1>
+    <h1>六角學院 2024 Vue 前端新手營HW<span>By Kevin Wei</span></h1>
   </header>
 
   <div class="content-wrap">
@@ -68,6 +69,11 @@ header {
     font-weight: bold;
     text-align: center;
     margin-left: auto;
+    span {
+      color: #ccc;
+      font-size: 18px;
+      margin-left: 10px;
+    }
   }
 }
 .content-wrap {
