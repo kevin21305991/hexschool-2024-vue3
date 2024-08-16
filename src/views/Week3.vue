@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import ProductItem from '@/components/ProductItem.vue';
 import OrderedProduct from '@/components/OrderedProduct.vue';
+import OrderCard from '@/components/OrderCard.vue';
 
 const products = ref([
   {
@@ -58,11 +59,14 @@ const remark = ref('');
 const order = ref({});
 
 const addCart = (product) => {
-  order.value = {};
-  cart.value.push({
-    ...product,
-    count: 1
-  });
+  const isAdd = cart.value.find((item) => item.id === product.id);
+  if (!isAdd) {
+    order.value = {};
+    cart.value.push({
+      ...product,
+      count: 1
+    });
+  }
 };
 
 const removeCart = (product) => {
@@ -161,37 +165,7 @@ const cartIsEmpty = computed(() => {
           <div v-if="!order.id" class="alert alert-secondary text-center" role="alert">
             尚未建立訂單
           </div>
-          <div v-else class="card">
-            <div class="card-body">
-              <div class="card-title">
-                <h5>訂單</h5>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">品項</th>
-                      <th scope="col">數量</th>
-                      <th scope="col">小計</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in order.cart" :key="item.id">
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.count }}</td>
-                      <td>{{ item.price * item.count }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div v-if="order.remark" class="text-end">
-                  備註: <span>{{ order.remark }}</span>
-                </div>
-                <div class="text-end">
-                  <h5>
-                    總計: <span>${{ order.total }}</span>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
+          <OrderCard v-else :data="order" />
         </div>
       </div>
     </div>
